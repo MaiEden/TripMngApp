@@ -1,0 +1,30 @@
+### Test student insert
+POST http://localhost:8080/students/Add
+Content-Type: application/json
+
+{
+  "Id": "214342582",
+  "firstName": "Mai",
+  "lastName": "Eden",
+  "grade": "6,3"
+}
+
+###
+GET http://localhost:8080/students/get/214332552
+
+###
+POST http://localhost:8080/teacher/add
+Content-Type: application/json
+
+{
+  "Id": "214332552",
+  "firstName": "Lea",
+  "lastName": "Levy",
+  "grade": "6,2"
+}
+
+###
+GET http://localhost:8080/teacher/get/214342552
+
+###
+GET http://localhost:8080/teacher/getStudents/214332552
