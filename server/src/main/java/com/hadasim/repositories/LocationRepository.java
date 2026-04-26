@@ -1,0 +1,8 @@
+package com.hadasim.repositories;
+import com.hadasim.entities.Location;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LocationRepository
+        extends JpaRepository<Location,String> {
+    Location findByUserId(String userId);
+}

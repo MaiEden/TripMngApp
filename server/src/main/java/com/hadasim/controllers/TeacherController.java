@@ -22,7 +22,7 @@ public class TeacherController {
     }
 
     @GetMapping("/get/{id}")
-    public User getTeacher(@PathVariable String id) {
+    public Teacher getTeacher(@PathVariable String id) {
         return teacherService.findTeacherById(id);
     }
 

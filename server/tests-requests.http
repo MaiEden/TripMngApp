@@ -28,3 +28,20 @@ GET http://localhost:8080/teacher/get/214342552
 
 ###
 GET http://localhost:8080/teacher/getStudents/214332552
+
+### cordinates
+###
+POST http://localhost:8080/Locations/Add
+Content-Type: application/json
+
+{
+  "ID": "214332552",
+  "Coordinates": {
+    "Longitude": {"Degrees": "34", "Minutes": "46", "Seconds": "44"},
+    "Latitude": {"Degrees": "32", "Minutes": "5", "Seconds": "23"}
+  },
+  "Time": "2024-12-05T15:30:00Z"
+}
+
+###
+GET http://localhost:8080/Locations/get/214332552
