@@ -6,6 +6,7 @@ import com.hadasim.services.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/students")
 @AllArgsConstructor
