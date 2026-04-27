@@ -1,7 +1,6 @@
 package com.hadasim.dtos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.hadasim.entities.Location;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +18,27 @@ public class LocationDto {
     private Coordinates Coordinates;
 
     private Instant Time;
+
+    public static Location dtoToLocation(LocationDto locationDto) {
+        Location location = new Location();
+        location.setId(locationDto.getID());
+
+
+        LocationDto.Dms longitudeDto = locationDto.getCoordinates().getLongitude();
+        location.setLongitudeDegrees(longitudeDto.getDegrees());
+        location.setLongitudeSeconds(longitudeDto.getSeconds());
+        location.setLongitudeMinutes(longitudeDto.getMinutes());
+
+        LocationDto.Dms latitudeDto = locationDto.getCoordinates().getLatitude();
+        location.setLatitudeDegrees(latitudeDto.getDegrees());
+        location.setLatitudeSeconds(latitudeDto.getSeconds());
+        location.setLatitudeMinutes(latitudeDto.getMinutes());
+
+        location.setTime(locationDto.getTime());
+        return location;
+
+
+    }
 
     @Getter
     @Setter

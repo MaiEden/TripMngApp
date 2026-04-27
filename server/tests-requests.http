@@ -35,7 +35,7 @@ POST http://localhost:8080/Locations/Add
 Content-Type: application/json
 
 {
-  "ID": "214332552",
+  "ID": "214342622",
   "Coordinates": {
     "Longitude": {"Degrees": "34", "Minutes": "46", "Seconds": "44"},
     "Latitude": {"Degrees": "32", "Minutes": "5", "Seconds": "23"}

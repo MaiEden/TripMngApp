@@ -1,7 +1,6 @@
 package com.hadasim.controllers;
 
 import com.hadasim.entities.Student;
-import com.hadasim.entities.User;
 import com.hadasim.services.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
