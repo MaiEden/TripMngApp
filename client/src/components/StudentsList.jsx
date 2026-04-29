@@ -6,7 +6,7 @@ export default function StudentsList({ students }) {
   return (
     <Box sx={{ overflowY: "auto", maxHeight: "65vh" }}>
       {students.map((student) => (
-        <StudentItem key={student.Id} student={student} />
+        <StudentItem key={student.id} student={student} />
       ))}
     </Box>
   )

@@ -22,17 +22,19 @@ public class LocationDto {
     public static Location dtoToLocation(LocationDto locationDto) {
         Location location = new Location();
         location.setId(locationDto.getID());
-
-
         LocationDto.Dms longitudeDto = locationDto.getCoordinates().getLongitude();
-        location.setLongitudeDegrees(longitudeDto.getDegrees());
-        location.setLongitudeSeconds(longitudeDto.getSeconds());
-        location.setLongitudeMinutes(longitudeDto.getMinutes());
+
+        location.setLongitude(dmsToDecimal(
+                Integer.parseInt(longitudeDto.getDegrees()),
+                Integer.parseInt(longitudeDto.getMinutes()),
+                Integer.parseInt(longitudeDto.getSeconds())));
 
         LocationDto.Dms latitudeDto = locationDto.getCoordinates().getLatitude();
-        location.setLatitudeDegrees(latitudeDto.getDegrees());
-        location.setLatitudeSeconds(latitudeDto.getSeconds());
-        location.setLatitudeMinutes(latitudeDto.getMinutes());
+
+        location.setLatitude(dmsToDecimal(
+                Integer.parseInt(latitudeDto.getDegrees()),
+                Integer.parseInt(latitudeDto.getMinutes()),
+                Integer.parseInt(latitudeDto.getSeconds())));
 
         location.setTime(locationDto.getTime());
         return location;
@@ -61,5 +63,14 @@ public class LocationDto {
         private String Minutes;
 
         private String Seconds;
+    }
+
+    public static double dmsToDecimal(int degrees, int minutes, double seconds) {
+        double sign = (degrees < 0) ? -1 : 1;
+        double decimal = Math.abs(degrees)
+                + (minutes / 60.0)
+                + (seconds / 3600.0);
+        decimal *= sign;
+        return decimal;
     }
 }

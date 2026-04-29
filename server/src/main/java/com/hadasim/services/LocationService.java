@@ -7,6 +7,7 @@ import com.hadasim.entities.Teacher;
 import com.hadasim.entities.User;
 import com.hadasim.repositories.LocationRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class LocationService {
     private LocationRepository locationRepository;
     private final StudentService studentService;
     private final TeacherService teacherService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public Location AddLocation(LocationDto locationDto) {
         User student = studentService.findStudentById(locationDto.getID());
@@ -33,10 +35,23 @@ public class LocationService {
         } else {
             teacherService.AddTeacher((Teacher) user);
         }
+
+        messagingTemplate.convertAndSend(
+                "/topic/locations/"+locationDto.getID(),
+                location
+        );
         return location;
     }
 
     public Location findLocationByUserId(String userId) {
         return locationRepository.findByUserId(userId);
     }
-}
+
+    private static double dmsToDecimal(int degrees, int minutes, double seconds) {
+        double sign = (degrees < 0) ? -1 : 1;
+        double decimal = Math.abs(degrees)
+                + (minutes / 60.0)
+                + (seconds / 3600.0);
+        decimal *= sign;
+        return decimal;
+    }}

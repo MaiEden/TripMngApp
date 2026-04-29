@@ -7,7 +7,7 @@ export default function Layout({teacher, students}) {
     <Box sx={{ display: "flex", height: "100vh" }}>
 
         <Box sx={{ flex: 1 }}>
-        <MapArea />
+        <MapArea students={students} teacher={teacher} />
       </Box>
       <Box sx={{ width: "25%", minWidth: 280 }}>
         <SideBar teacher={teacher} students={students} />

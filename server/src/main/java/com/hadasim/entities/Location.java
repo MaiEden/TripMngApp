@@ -13,18 +13,9 @@ public class Location {
     @Id
     private String id; // 9 digits
 
-    //    @Column(name = "longitude_degrees")
-    private String longitudeDegrees;
-    //    @Column(name = "longitude_minutes")
-    private String longitudeMinutes;
-    //    @Column(name = "longitude_seconds")
-    private String longitudeSeconds;
-    //    @Column(name = "latitude_degrees")
-    private String latitudeDegrees;
-    //    @Column(name = "latitude_minutes")
-    private String latitudeMinutes;
-    //    @Column(name = "latitude_seconds")
-    private String latitudeSeconds;
+    private Double longitude;
+
+    private Double latitude;
 
     private Instant time;
 

@@ -14,12 +14,6 @@ function App() {
         })
     }, [])
 
-  // const teacher = {
-  //   firstName: "שרה",
-  //   lastName: "כהן",
-  //   grade: "ו2"
-  // }
-
    const [students, setStudents] = useState([])
 
     useEffect(() => {
@@ -29,14 +23,8 @@ function App() {
             console.error(error);
         })
     }, [])
-  // [
-  //   { id: 1, firstName: "רחל", lastName: "לוי" },
-  //   { id: 2, firstName: "מיכל", lastName: "ישראלי" },
-  //   { id: 3, firstName: "תמר", lastName: "אברהם" }
-  // ]
 
   return <Layout teacher={teacher} students={students} />
 }
-
 
 export default App
