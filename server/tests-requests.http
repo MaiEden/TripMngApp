@@ -3,7 +3,7 @@ POST http://localhost:8080/students/Add
 Content-Type: application/json
 
 {
-  "id": "214332552",
+  "id": "456214568",
   "firstName": "Mai",
   "lastName": "Eden",
   "grade": "6,2"
@@ -45,3 +45,27 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/Locations/get/214332552
+
+###
+POST http://localhost:8080/teacher/register
+Content-Type: application/json
+
+{
+  "password": "Password214342552",
+  "id": "214342552",
+  "firstName": "Mai",
+  "lastName": "Eden",
+  "grade": "6,2"
+}
+
+###
+POST http://localhost:8080/teacher/login
+Content-Type: application/json
+
+{
+  "password": "Password21434252",
+  "id": "214342552",
+  "firstName": "Mai",
+  "lastName": "Eden",
+  "grade": "6,2"
+}

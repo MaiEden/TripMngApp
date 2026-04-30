@@ -2,9 +2,11 @@ import { ListItem, ListItemText } from "@mui/material"
 
 export default function StudentItem({ student }) {
   return (
-    <ListItem divider>
+    <ListItem divider  sx={{
+    backgroundColor: student.isTooFar ? "#ffebee" : "inherit"
+  }}>
       <ListItemText
-        primary={`${student.firstName} ${student.lastName}`}
+        primary={`${student.firstName} ${student.lastName} ${student.id}`}
       />
     </ListItem>
   )

@@ -9,10 +9,11 @@ const teacher = {
     id: "214332552",
     firstName: "Lea",
     lastName: "Levy",
-    grade: "6,2"
+    grade: "6,2",
+    password: "password123"
 };
 
-let teacher_step ={ step: 0, inc: true}
+let teacher_step = { step: 0, inc: true }
 
 const students = [
     {
@@ -59,7 +60,7 @@ const route = [
 
 // adding teacher and student data to the server
 try {
-    const response = await fetch(`${SERVER_URL}/teacher/add`, {
+    const response = await fetch(`${SERVER_URL}/teacher/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -177,11 +178,53 @@ function handle_Step(stepInfo) {
     return { step, inc };
 }
 
+const farStudent =
+    {
+        id: "234342529",
+        firstName: "Avi",
+        lastName: "Mizrahi",
+        grade: "6,2"
+    };
+
+try {
+    const response = await fetch(`${SERVER_URL}/students/Add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(farStudent)
+    });
+
+    console.log("Sent farStudent data:", farStudent, "status:", response.status);
+} catch (error) {
+    console.error("Error sending farStudent data:", error);
+}
+
+async function addingFarStudentLocation() {
+ try {
+        const response = await fetch(`${SERVER_URL}/Locations/Add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ID: farStudent.id,
+                ...decimalToDMSObject(31.787222, 34.886304),
+                Time: new Date().toISOString()
+            })
+        });
+
+    } catch (error) {
+        console.error("Error sending location:", error);
+    }}
+
+
 setInterval(() => {
     teacher_step = handle_Step(teacher_step);
-    sendLocation(teacher.id, teacher_step.step,true);
+    sendLocation(teacher.id, teacher_step.step, true);
     let student = Math.floor(Math.random() * students.length)
     const randomUser = students[student];
     students_steps[student] = handle_Step(students_steps[student]);
     sendLocation(randomUser.id, students_steps[student].step, false);
-}, 2000);
+    addingFarStudentLocation();
+}, 3000);

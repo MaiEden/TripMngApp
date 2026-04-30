@@ -19,6 +19,8 @@ public class Location {
 
     private Instant time;
 
+    private Boolean isTooFar;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")

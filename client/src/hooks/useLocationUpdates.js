@@ -23,6 +23,7 @@ export default function useLocationUpdates({ students = [], teacher }) {
                 lat: data.latitude,
                 lng: data.longitude,
                 time: data.time,
+                isTooFar: data.isTooFar
               },
             }));
           });

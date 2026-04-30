@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 
 import placeholderIcon from "../icons/placeholder.png";
-import useLocationUpdates from "../hooks/useLocationUpdates";
+import placeholderDangerIcon from "../icons/placeholder-danger.png";
 import MapCenter from "./MapCenter";
 
 
@@ -12,8 +12,12 @@ const customIcon = new Icon({
   iconSize: [38, 38],
 });
 
-export default function MapArea({ students = [], teacher }) {
-  const locations = useLocationUpdates({ students, teacher });
+const dangerIcon = new Icon({
+  iconUrl: placeholderDangerIcon,
+  iconSize: [38, 38]
+});
+
+export default function MapArea({ students = [], teacher , locations}) {
 
   const teacherLocation = teacher?.id ? locations[teacher.id] : null;
 
@@ -53,7 +57,7 @@ export default function MapArea({ students = [], teacher }) {
             <Marker
               key={student.id}
               position={[location.lat, location.lng]}
-              icon={customIcon}
+              icon={location.isTooFar ? dangerIcon : customIcon}
             >
               <Popup>
                 {student.firstName} {student.lastName}

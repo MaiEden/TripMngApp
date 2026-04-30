@@ -6,6 +6,7 @@ import com.hadasim.entities.Student;
 import com.hadasim.entities.Teacher;
 import com.hadasim.entities.User;
 import com.hadasim.repositories.LocationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,25 @@ public class LocationService {
         User user = student==null ? teacher : student;
 
         if (user == null) {
-            return null;
+            throw new EntityNotFoundException("No such user");
         }
         Location location = LocationDto.dtoToLocation(locationDto);
+
+        if(student == null) {
+            // if the user is a teacher
+            location.setIsTooFar(Boolean.FALSE);
+        } else{
+            location.setIsTooFar(isTooFar(location, user));
+        }
 
         location.setUser(user);
         user.setLocation(location);
         if (teacher == null) {
             studentService.AddStudent((Student) user);
         } else {
-            teacherService.AddTeacher((Teacher) user);
+            teacherService.UpdateTeacher((Teacher) user);
         }
+
 
         messagingTemplate.convertAndSend(
                 "/topic/locations/"+locationDto.getID(),
@@ -47,11 +56,32 @@ public class LocationService {
         return locationRepository.findByUserId(userId);
     }
 
-    private static double dmsToDecimal(int degrees, int minutes, double seconds) {
-        double sign = (degrees < 0) ? -1 : 1;
-        double decimal = Math.abs(degrees)
-                + (minutes / 60.0)
-                + (seconds / 3600.0);
-        decimal *= sign;
-        return decimal;
-    }}
+    private Boolean isTooFar(Location location, User user) {
+        Teacher teacher = teacherService.getTeacherByGrade(user.getGrade());
+        if (teacher.getLocation() == null)
+            return false;
+        int distance = calculateDistanceInKilometer(
+                teacher.getLocation().getLatitude(),
+                teacher.getLocation().getLongitude(),
+                location.getLatitude(),
+                location.getLongitude());
+        return distance > 3;
+    }
+
+    private final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
+    private int calculateDistanceInKilometer(double teacherLat, double teacherLng,
+                                            double studentLat, double studentLng) {
+
+        double latDistance = Math.toRadians(teacherLat - studentLat);
+        double lngDistance = Math.toRadians(teacherLng - studentLng);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(teacherLat)) * Math.cos(Math.toRadians(studentLat))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c));
+    }
+
+}

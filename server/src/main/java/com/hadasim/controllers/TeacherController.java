@@ -1,9 +1,11 @@
 package com.hadasim.controllers;
 
+import com.hadasim.dtos.LoginDto;
 import com.hadasim.entities.Student;
 import com.hadasim.entities.Teacher;
 import com.hadasim.services.TeacherService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +17,14 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public Teacher getTeacher(@RequestBody Teacher teacher) {
         return teacherService.AddTeacher(teacher);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        return teacherService.loginTeacher(loginDto);
     }
 
     @GetMapping("/get/{id}")

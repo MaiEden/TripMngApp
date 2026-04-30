@@ -1,16 +1,16 @@
-import { Card, CardContent, Typography } from "@mui/material"
+import { Box, CardContent, Typography } from "@mui/material"
 
 export default function TeacherCard({ teacher }) {
   return (
-    <Card>
+    <Box>
       <CardContent>
-        <Typography variant="h6">
+        <Typography variant="h2">
           {teacher.firstName} {teacher.lastName}
         </Typography>
-        <Typography color="text.secondary">
+        <Typography color="text.secondary" variant="h6">
           כיתה: {teacher.grade}
         </Typography>
       </CardContent>
-    </Card>
+    </Box>
   )
 }

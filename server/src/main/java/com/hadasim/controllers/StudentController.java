@@ -2,6 +2,7 @@ package com.hadasim.controllers;
 
 import com.hadasim.entities.Student;
 import com.hadasim.services.StudentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/Add")
-    public Student getStudent(@RequestBody Student student) {
+    public Student getStudent(@RequestBody @Valid Student student) {
         return studentService.AddStudent(student);
     }
 
