@@ -3,12 +3,11 @@ This application is a system for managing and tracking students' locations durin
 
 It is designed for teachers and allows them to view students' locations in real time using data received from sensors.
 
-The application displays an interactive map with the students' locations, along with an organized list of all participants. In addition, it allows teachers to register, log in, and adding students.
+The application displays an interactive map with the students' locations, along with an organized list of all participants. In addition, it allows teachers to register, log in and manage students, including adding students.
 
 The system is built using a client-server architecture:
 
 The server side is developed with Spring Boot, and the client side is built with React using Vite and JavaScript.
-A standard style for README files
 
 ## How to Install and Run
 ### Prerequisites
@@ -36,7 +35,7 @@ docker-compose up -d
 
 This will start a PostgreSQL database with the configuration defined in [docker-compose.yml](https://github.com/MaiEden/TripMngApp/blob/main/server/docker-compose.yml).
 ### 3. Run the Server
-Open the server project in your IDE and run the file [TripMngAppApplication.java](https://github.com/MaiEden/TripMngApp/blob/main/server/src/test/java/com/hadasim/TripMngAppApplicationTests.java)
+Open the server project in your IDE and run the file [TripMngAppApplication.java](https://github.com/MaiEden/TripMngApp/blob/main/server/src/main/java/com/hadasim/TripMngAppApplication.java)
 The server will run on:
 
 ```shellscript
@@ -82,12 +81,12 @@ Make sure the server is running before starting the simulation.
    After this you will enter the map area.
    There, you can add students:
    <img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/a5c05d36-ae90-46f2-9b73-181ca4ea5220" />
-   After that you can see the the students you added:
+   After that you can see the students you added:
    <img width="1918" height="871" alt="image" src="https://github.com/user-attachments/assets/4f4354ab-eae4-4eda-9af1-5d5884ca1964" />
-**Note:** Locations won't apeare in the screan because there are no real sensors. If you want to see the sensors you should run the [simulation](https://github.com/MaiEden/TripMngApp/blob/main/Simulation.js) file.
+**Note:** Locations won't appear on the screen because there are no real sensors. If you want to see the sensors you should run the [simulation](https://github.com/MaiEden/TripMngApp/blob/main/Simulation.js) file.
     
 ### How to use with Simulation file
 Run the simulation and then log in with teacher id: 214332552, password: password123.
-Then the script will send location for all the demo student and for the teacher every 3 seconds:
+Then the script will send location for all the demo students and for the teacher every 3 seconds:
 
-![App Screenshot](assets/screenshot.png)
+![app_recor](https://github.com/MaiEden/TripMngApp/blob/main/app_recordings.gif)
