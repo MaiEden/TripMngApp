@@ -29,6 +29,11 @@ public class TeacherService {
         if (existTeacher != null) {
             throw new InvalidParameterException("Teacher already exist");
         }
+        existTeacher = teacherRepository.findByGrade(teacher.getGrade());
+        if (existTeacher != null) {
+            throw new InvalidParameterException("Teacher of tha grade already exist");
+        }
+
         teacher.setPassword(hashPassword(teacher.getPassword()));
         return teacherRepository.save(teacher);
     }
