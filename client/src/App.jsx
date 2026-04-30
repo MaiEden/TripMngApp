@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Layout from './components/Layout.jsx';
 import AuthPanel from './components/AuthPanel';
 import { getStudents, getTeacherById } from './services/teacherService.js';
 
 function App() {
+    // current teacher loged in
     const [currentTeacher, setCurrentTeacher] = useState();
+    // students of the current teacher
     const [students, setStudents] = useState([]);
 
+    // refresh students list after login or after adding a new student
     const refreshStudents = (teacherid) => {
         getStudents(teacherid).then((response) => {
             setStudents(response.data);
@@ -15,11 +18,11 @@ function App() {
         })
     };
 
-    const handleLoginSuccess = (teacherid) => {
-        getTeacherById(teacherid).then((response) => {
-            const teacher = response.data;
-            setCurrentTeacher(teacher);
-        });
+    // after successful login, get teacher details and students list
+    const handleLoginSuccess = async(teacherid) => {
+        const teacherResponse = await getTeacherById(teacherid);
+        const teacher = teacherResponse.data;
+        setCurrentTeacher(teacher);
         refreshStudents(teacherid);
     };
 
@@ -39,34 +42,3 @@ function App() {
 }
 
 export default App;
-
-// import Layout from './components/Layout.jsx';
-// import { useEffect, useState } from 'react';
-// import { getTeacherById, getStudents } from './services/teacherService.js';
-
-// function App() {
-
-//    const [teacher, setTeacher] = useState({})
-
-//     useEffect(() => {
-//         getTeacherById(214332552).then((response) => {
-//             setTeacher(response.data);
-//         }).catch(error => {
-//             console.error(error);
-//         })
-//     }, [])
-
-//    const [students, setStudents] = useState([])
-
-//     useEffect(() => {
-//         getStudents(214332552).then((response) => {
-//             setStudents(response.data);
-//         }).catch(error => {
-//             console.error(error);
-//         })
-//     }, [])
-
-//   return <Layout teacher={teacher} students={students} />
-// }
-
-// export default App

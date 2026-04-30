@@ -1,5 +1,5 @@
 /*
-This class simulates the movement of a teacher and students along a predefined route.
+This script simulates the movement of a teacher and students along a predefined route.
  It sends location updates to the server every 2 seconds, with the teacher following the route exactly
   and the students moving randomly around the route points.
   */
@@ -114,13 +114,28 @@ function decimalToDMSObject(lat, lng) {
     };
 }
 
+//slightly moving the students around the route points to simulate movement
+function randomMovePoint(lat, lng) {
+    const maxMeters = 30;
+    const metersNorth = (Math.random() * 2 - 1) * maxMeters;
+    const metersEast = (Math.random() * 2 - 1) * maxMeters;
+
+    const metersPerDegreeLat = 111_320;
+    const metersPerDegreeLng = 111_320 * Math.cos(lat * Math.PI / 180);
+
+    return {
+        latitude: +(lat + metersNorth / metersPerDegreeLat).toFixed(6),
+        longitude: +(lng + metersEast / metersPerDegreeLng).toFixed(6)
+    };
+}
+
 // Update the location. The teacher follows the route exactly, while students move randomly around the route points.
-async function sendLocation(userId, step, isTeacher) {
+async function sendLocation(userId, {lat,lng}, isTeacher) {
     let location;
     if (isTeacher) {
-        location = decimalToDMSObject(route[step].lat, route[step].lng);
+        location = decimalToDMSObject(lat, lng);
     } else {
-        const randomPoint = randomMovePoint(route[step].lat, route[step].lng);
+        const randomPoint = randomMovePoint(lat, lng);
         location = decimalToDMSObject(randomPoint.latitude, randomPoint.longitude);
     }
 
@@ -144,21 +159,6 @@ async function sendLocation(userId, step, isTeacher) {
     }
 }
 
-//slightly moving the students around the route points to simulate movement
-function randomMovePoint(lat, lng) {
-    const maxMeters = 15;
-    const metersNorth = (Math.random() * 2 - 1) * maxMeters;
-    const metersEast = (Math.random() * 2 - 1) * maxMeters;
-
-    const metersPerDegreeLat = 111_320;
-    const metersPerDegreeLng = 111_320 * Math.cos(lat * Math.PI / 180);
-
-    return {
-        latitude: +(lat + metersNorth / metersPerDegreeLat).toFixed(6),
-        longitude: +(lng + metersEast / metersPerDegreeLng).toFixed(6)
-    };
-}
-
 // Handle the step increment/decrement for the teacher and students.
 function handle_Step(stepInfo) {
     let { step, inc } = stepInfo;
@@ -178,6 +178,7 @@ function handle_Step(stepInfo) {
     return { step, inc };
 }
 
+//adding a far away student to demonstrate the far away student logic
 const farStudent =
     {
         id: "234342529",
@@ -200,31 +201,12 @@ try {
     console.error("Error sending farStudent data:", error);
 }
 
-async function addingFarStudentLocation() {
- try {
-        const response = await fetch(`${SERVER_URL}/Locations/add`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ID: farStudent.id,
-                ...decimalToDMSObject(31.787222, 34.886304),
-                Time: new Date().toISOString()
-            })
-        });
-
-    } catch (error) {
-        console.error("Error sending location:", error);
-    }}
-
-
 setInterval(() => {
     teacher_step = handle_Step(teacher_step);
-    sendLocation(teacher.id, teacher_step.step, true);
+    sendLocation(teacher.id, route[teacher_step.step], true);
     let student = Math.floor(Math.random() * students.length)
     const randomUser = students[student];
     students_steps[student] = handle_Step(students_steps[student]);
-    sendLocation(randomUser.id, students_steps[student].step, false);
-    addingFarStudentLocation();
+    sendLocation(randomUser.id, route[students_steps[student].step], false);
+    sendLocation(farStudent.id, {lat: 31.787222, lng: 34.886304}, false);
 }, 3000);

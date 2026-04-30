@@ -24,6 +24,6 @@ public class StudentService {
     }
 
     public Student findStudentById(String id) {
-        return studentRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Student not found"));
+        return studentRepository.findById(id).orElse(null);
     }
 }

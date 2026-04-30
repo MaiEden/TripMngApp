@@ -5,6 +5,7 @@ import useLocationUpdates from "../hooks/useLocationUpdates";
 
 export default function Layout({teacher, students,handleLogout, refreshStudents}) {
   const locations = useLocationUpdates({ students, teacher });
+  // add isTooFar property to students based on the latest location updates so the sidebar can be updated it in the list of students
     const studentsWithLocation = students.map(student => ({
     ...student,
     isTooFar: locations[student.id]?.isTooFar ?? false,

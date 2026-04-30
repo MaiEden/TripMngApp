@@ -25,6 +25,10 @@ public class TeacherService {
     private TeacherRepository teacherRepository;
 
     public Teacher addTeacher(Teacher teacher) {
+        Teacher existTeacher = teacherRepository.findById(teacher.getId()).orElse(null);
+        if (existTeacher != null) {
+            throw new InvalidParameterException("Teacher already exist");
+        }
         teacher.setPassword(hashPassword(teacher.getPassword()));
         return teacherRepository.save(teacher);
     }
@@ -34,7 +38,7 @@ public class TeacherService {
     }
 
     public Teacher findTeacherById(String teacherId) {
-        return teacherRepository.findById(teacherId).orElseThrow(()->new EntityNotFoundException("Teacher not found"));
+        return teacherRepository.findById(teacherId).orElse(null);
     }
 
     public List<Student> findStudents(String teacherId) {

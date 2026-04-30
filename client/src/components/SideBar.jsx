@@ -1,25 +1,13 @@
 import TeacherCard from "./TeacherCard";
 import StudentsList from "./StudentsList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddStudent from "./AddStudent";
-import { getStudents } from "../services/teacherService";
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 
 export default function SideBar({ teacher, students, handleLogout, refreshStudents }) {
+    // state to control the visibility of the add student form
     const [addStudent, setAddStudent] = useState(false);
-    // const [teacherStudents, setTeacherStudents] = useState([]);
 
-    // useEffect(() => {
-    //     setTeacherStudents(students || []);
-    // }, [students]);
-    // function handleAddStudent() {
-    //     setAddStudent(false);
-    //     getStudents(teacher.id).then((response) => {
-    //         setTeacherStudents(response.data);
-    //     }).catch(error => {
-    //         console.error(error);
-    //     })
-    // }
     return (
         <Box sx={{ height: "100%", p: 2, bgcolor: "background.paper" }}>
             <Stack spacing={2}>
@@ -30,12 +18,13 @@ export default function SideBar({ teacher, students, handleLogout, refreshStuden
                 <Button onClick={handleLogout}>Logout</Button>
 
                 {addStudent && (
-                    <AddStudent onFinished={()=>refreshStudents(teacher.id)} teacherGrade={teacher.grade} />
+                    <AddStudent onFinished={() => { refreshStudents(teacher.id); setAddStudent(false) }} teacherGrade={teacher.grade} />
                 )}
 
-                <Button variant="outlined" onClick={() => setAddStudent(true)}>
-                    add student
-                </Button>
+                {!addStudent &&
+                    (<Button variant="outlined" onClick={() => setAddStudent(true)}>
+                        Add student
+                    </Button>)}
             </Stack>
         </Box>
     );

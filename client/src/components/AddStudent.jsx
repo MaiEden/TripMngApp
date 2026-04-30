@@ -3,28 +3,22 @@ import { addStudent } from "../services/studentService";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
 export default function AddStudent({ onFinished, teacherGrade }) {
-    const [IDInput, setIDInput] = useState("");
-    const [FirstNameInput, setFirstNameInput] = useState("");
-    const [LastNameInput, setLastNameInput] = useState("");
+    const [idInput, setIDInput] = useState("");
+    const [firstNameInput, setFirstNameInput] = useState("");
+    const [lastNameInput, setLastNameInput] = useState("");
     const [error, setError] = useState("");
 
     const handleAddStudent = (e) => {
         e.preventDefault();
         const newStudent = {
-            id: IDInput,
-            firstName: FirstNameInput,
-            lastName: LastNameInput,
+            id: idInput,
+            firstName: firstNameInput,
+            lastName: lastNameInput,
             grade: teacherGrade
         };
         addStudent(newStudent).then((response) => {
-            if (response.status === 200) {
-                // Student added successfully, you can perform any additional actions here
-                console.log("Student added successfully");
-                onFinished(); // Pass the new student data back to the parent component
-            } else {
-                console.error("Failed to add student. Please try again.");
-                setError("Failed to add student. Please try again.");
-            }
+            console.log("Student added successfully");
+            onFinished(); // call the onFinished callback to refresh the students list and hide the form
         }).catch((error) => {
             console.error("An error occurred while adding the student:", error);
             setError("Failed to add student. Please try again.");
@@ -44,19 +38,19 @@ export default function AddStudent({ onFinished, teacherGrade }) {
 
                 <TextField
                     label="ID"
-                    value={IDInput}
+                    value={idInput}
                     onChange={(e) => setIDInput(e.target.value)}
                 />
 
                 <TextField
                     label="First name"
-                    value={FirstNameInput}
+                    value={firstNameInput}
                     onChange={(e) => setFirstNameInput(e.target.value)}
                 />
 
                 <TextField
                     label="Last name"
-                    value={LastNameInput}
+                    value={lastNameInput}
                     onChange={(e) => setLastNameInput(e.target.value)}
                 />
                 {error && (

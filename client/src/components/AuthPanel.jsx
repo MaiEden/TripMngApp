@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Box, Button, Card, CardContent, TextField, Typography, Alert, Stack } from "@mui/material";
-
-import {
-  getTeacherById,
-  registerTeacher,
-  loginTeacher,
-} from "../services/teacherService";
+import { getTeacherById, registerTeacher, loginTeacher } from "../services/teacherService";
 
 function AuthPanel({ onLoginSuccess }) {
   const [authMode, setAuthMode] = useState("login");
@@ -19,15 +14,10 @@ function AuthPanel({ onLoginSuccess }) {
   const [authError, setAuthError] = useState("");
 
   const handleRegister = async () => {
-    if (
-      userIdInput.trim() === "" ||
-      passwordInput.trim() === "" ||
-      userGradeInput.trim() === ""
-    ) {
+    if (userIdInput.trim() === "" || passwordInput.trim() === "" || userGradeInput.trim() === "") {
       setAuthError("User ID, password and grade are required");
       return;
     }
-
     try {
       const teacher = await getTeacherById(userIdInput);
 
@@ -45,7 +35,6 @@ function AuthPanel({ onLoginSuccess }) {
       };
 
       const response = await registerTeacher(newTeacher);
-
       if (response.status === 200) {
         onLoginSuccess(userIdInput);
       } else {
@@ -58,6 +47,11 @@ function AuthPanel({ onLoginSuccess }) {
   };
 
   const handleLogin = async () => {
+    if (userIdInput.trim() === "" || passwordInput.trim() === "") {
+      setAuthError("User ID and password are required");
+      return;
+    }
+
     const loginTryInfo = {
       id: userIdInput,
       password: passwordInput,
@@ -65,15 +59,11 @@ function AuthPanel({ onLoginSuccess }) {
 
     try {
       const response = await loginTeacher(loginTryInfo);
-
-      if (response.status === 200) {
-        onLoginSuccess(userIdInput);
-      } else {
-        setAuthError("Login failed. Please check your credentials and try again.");
-      }
+      console.log("Login successful");
+      onLoginSuccess(userIdInput);
     } catch (error) {
       console.error(error);
-      setAuthError("An error occurred during login. Please try again.");
+      setAuthError(`Login failed. ${error.response?.data?.message || "Invalid credentials"}.`);
     }
   };
 
@@ -86,7 +76,7 @@ function AuthPanel({ onLoginSuccess }) {
         justifyContent: "center",
       }}
     >
-      <Card sx={{ width: "100%", maxWidth: 420}}>
+      <Card sx={{ width: "100%", maxWidth: 420 }}>
         <CardContent>
           <Stack spacing={2}>
             <Typography variant="h4" align="center" fontWeight="bold">

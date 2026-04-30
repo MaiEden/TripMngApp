@@ -13,6 +13,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Teacher extends User {
-    @JsonIgnore
     public String password;
 }

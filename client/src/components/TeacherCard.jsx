@@ -4,11 +4,11 @@ export default function TeacherCard({ teacher }) {
   return (
     <Box>
       <CardContent>
-        <Typography variant="h2">
+        <Typography variant="h3">
           {teacher.firstName} {teacher.lastName}
         </Typography>
         <Typography color="text.secondary" variant="h6">
-          כיתה: {teacher.grade}
+          Grade: {teacher.grade}
         </Typography>
       </CardContent>
     </Box>

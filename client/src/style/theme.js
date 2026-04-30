@@ -43,12 +43,5 @@ export const theme = createTheme({
         variant: "outlined",
       },
     },
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          padding: 20,
-        },
-      },
-    },
   },
 });
