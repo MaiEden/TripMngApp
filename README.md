@@ -19,44 +19,58 @@ Before running the project, make sure you have installed:
 - [Node.js](https://nodejs.org/en/download) and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - An IDE such as [IntelliJ](https://www.jetbrains.com/idea/download/) IDEA or [VS Code](https://code.visualstudio.com/download)
 ### 1. Clone the Repository
-```bash
+
+```shellscript
 git clone https://github.com/MaiEden/TripMngApp.git
 cd TripMngApp
 ```
+
 ### 2. Run the Database
 The project uses PostgreSQL, which runs with Docker Compose.
 
 From the server folder, run:
-```bash
+
+```shellscript
 docker-compose up -d
 ```
+
 This will start a PostgreSQL database with the configuration defined in [docker-compose.yml](https://github.com/MaiEden/TripMngApp/blob/main/server/docker-compose.yml).
 ### 3. Run the Server
 Open the server project in your IDE and run the file [TripMngAppApplication.java](https://github.com/MaiEden/TripMngApp/blob/main/server/src/test/java/com/hadasim/TripMngAppApplicationTests.java)
 The server will run on:
-```bash
+
+```shellscript
 http://localhost:8080
 ```
+
 ### 4. Run the Client
 
 Open a terminal and navigate to the client folder:
-```bash
+
+```shellscript
 cd client
 ```
+
 Install the dependencies:
-```bash
+
+```shellscript
 npm install
 ```
+
 Run the client:
-```bash
+
+```shellscript
 npm run dev
 ```
+
 ### 5. Run the Sensor Simulation
 
 To simulate sensor location updates, run the simulation file:
-```bash
+
+```shellscript
 node Simulation.js
 ```
+
 Make sure the server is running before starting the simulation.
 
 ## How to use
@@ -75,3 +89,5 @@ Make sure the server is running before starting the simulation.
 ### How to use with Simulation file
 Run the simulation and then log in with teacher id: 214332552, password: password123.
 Then the script will send location for all the demo student and for the teacher every 3 seconds:
+
+![App Screenshot](assets/screenshot.png)
