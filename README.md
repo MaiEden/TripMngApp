@@ -6,14 +6,13 @@ It is designed for teachers and allows them to view students' locations in real 
 The application displays an interactive map with the students' locations, along with an organized list of all participants. In addition, it allows teachers to register, log in and manage students, including adding students.
 
 The system is built using a client-server architecture:
-
-The server side is developed with Spring Boot, and the client side is built with React using Vite and JavaScript.
+the server side is developed with Spring Boot, and the client side is built with React using Vite and JavaScript.
 
 ## How to Install and Run
 ### Prerequisites
 
 Before running the project, make sure you have installed:
-- [Java 17](https://github.com/noffle/art-of-readme)
+- [Java 17](https://www.java.com/en/download)
 - [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/download) and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - An IDE such as [IntelliJ](https://www.jetbrains.com/idea/download/) IDEA or [VS Code](https://code.visualstudio.com/download)
@@ -74,9 +73,9 @@ Make sure the server is running before starting the simulation.
 
 ## How to use
 
-**Open the application** in your browser (usually at http://localhost:5173).
+- **Open the application** in your browser (usually at http://localhost:5173).
 
-**Register as a teacher** by providing your details.
+- **Register as a teacher** by providing your details.
    <img width="1919" height="869" alt="image" src="https://github.com/user-attachments/assets/8e27e5d2-548f-4ab5-a32e-6b7baab7801f" />
    After this you will enter the map area.
    There, you can add students:
