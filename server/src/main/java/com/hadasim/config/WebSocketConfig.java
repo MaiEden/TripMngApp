@@ -12,13 +12,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        //the end points that the client can connect to
         registry.addEndpoint("/LocationUpdates")
+                // allow other domains to connect
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+        // the channel the client will connect to
         registry.enableSimpleBroker("/topic");
     }
 }

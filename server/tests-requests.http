@@ -13,7 +13,7 @@ Content-Type: application/json
 GET http://localhost:8080/students/get/234342526
 
 ###
-POST http://localhost:8080/teacher/add
+POST http://localhost:8080/teachers/add
 Content-Type: application/json
 
 {
@@ -24,14 +24,14 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/teacher/get/234342526
+GET http://localhost:8080/teachers/get/234342526
 
 ###
-GET http://localhost:8080/teacher/getStudents/214332552
+GET http://localhost:8080/teachers/getStudents/214332552
 
 ### cordinates
 ###
-POST http://localhost:8080/Locations/Add
+POST http://localhost:8080/Locations/add
 Content-Type: application/json
 
 {
@@ -47,7 +47,7 @@ Content-Type: application/json
 GET http://localhost:8080/Locations/get/214332552
 
 ###
-POST http://localhost:8080/teacher/register
+POST http://localhost:8080/teachers/register
 Content-Type: application/json
 
 {
@@ -59,7 +59,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/teacher/login
+POST http://localhost:8080/teachers/login
 Content-Type: application/json
 
 {

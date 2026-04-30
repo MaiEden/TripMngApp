@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const REST_API_BASE_URL = "http://localhost:8080/teacher";
+const REST_API_BASE_URL = "http://localhost:8080/teachers";
 
 export const getTeacherById = (teacherId) => axios.get(`${REST_API_BASE_URL}/get/${teacherId}`);
 

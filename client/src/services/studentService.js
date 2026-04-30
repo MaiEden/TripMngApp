@@ -2,4 +2,4 @@ import axios from "axios";
 
 const REST_API_BASE_URL = "http://localhost:8080/students";
 
-export const addStudent = (studentData) => axios.post(`${REST_API_BASE_URL}/Add`, studentData);
+export const addStudent = (studentData) => axios.post(`${REST_API_BASE_URL}/add`, studentData);

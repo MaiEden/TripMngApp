@@ -14,16 +14,18 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class LocationService {
+    private static final int MAX_DISTANCE = 3;
     private LocationRepository locationRepository;
     private final StudentService studentService;
     private final TeacherService teacherService;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public Location AddLocation(LocationDto locationDto) {
+    public Location addLocation(LocationDto locationDto) {
         User student = studentService.findStudentById(locationDto.getID());
         User teacher = teacherService.findTeacherById(locationDto.getID());
         User user = student==null ? teacher : student;
 
+        // if the user not found
         if (user == null) {
             throw new EntityNotFoundException("No such user");
         }
@@ -39,9 +41,9 @@ public class LocationService {
         location.setUser(user);
         user.setLocation(location);
         if (teacher == null) {
-            studentService.AddStudent((Student) user);
+            studentService.addStudent((Student) user);
         } else {
-            teacherService.UpdateTeacher((Teacher) user);
+            teacherService.updateTeacher((Teacher) user);
         }
 
 
@@ -65,9 +67,10 @@ public class LocationService {
                 teacher.getLocation().getLongitude(),
                 location.getLatitude(),
                 location.getLongitude());
-        return distance > 3;
+        return distance > MAX_DISTANCE;
     }
 
+    // helper function for students distance from teacher
     private final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
     private int calculateDistanceInKilometer(double teacherLat, double teacherLng,
                                             double studentLat, double studentLng) {

@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingRequestValueException;
 
+import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
@@ -19,25 +21,20 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TeacherService {
-
     private final StudentRepository studentRepository;
     private TeacherRepository teacherRepository;
 
-
-    public Teacher AddTeacher(Teacher teacher) {
-        if(teacher.getId() == null|| teacher.getPassword() == null) {
-            throw new RuntimeException("Missing username or password");
-        }
+    public Teacher addTeacher(Teacher teacher) {
         teacher.setPassword(hashPassword(teacher.getPassword()));
         return teacherRepository.save(teacher);
     }
 
-    public Teacher UpdateTeacher(Teacher teacher) {
-        return teacherRepository.save(teacher);
+    public void updateTeacher(Teacher teacher) {
+        teacherRepository.save(teacher);
     }
 
     public Teacher findTeacherById(String teacherId) {
-        return teacherRepository.findById(teacherId).orElse(null);
+        return teacherRepository.findById(teacherId).orElseThrow(()->new EntityNotFoundException("Teacher not found"));
     }
 
     public List<Student> findStudents(String teacherId) {
@@ -48,31 +45,21 @@ public class TeacherService {
         return studentRepository.findAllByGrade(teacher.getGrade());
     }
 
-    public ResponseEntity<String> loginTeacher(LoginDto loginDto) {
-
-        if(loginDto.getId() == null|| loginDto.getPassword() == null) {
-            return ResponseEntity.badRequest().body("Missing username or password");
-        }
-
+    public void loginTeacher(LoginDto loginDto) {
         Teacher existTeacher = findTeacherById(loginDto.getId());
 
         if (existTeacher == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User not found");
+            throw new EntityNotFoundException("Teacher not found");
         }
-        String password = existTeacher.getPassword();
-        String hashedPassword = hashPassword(password);
+
         boolean loginSuccess = existTeacher.getPassword().equals(hashPassword(loginDto.getPassword()));
-        if (loginSuccess) {
-            return ResponseEntity.ok("Login successful");
+        if (!loginSuccess) {
+            throw new InvalidParameterException("Passwords do not match");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Invalid password");
     }
 
     public Teacher getTeacherByGrade(String teacherGrade) {
         return teacherRepository.findByGrade(teacherGrade);
-
     }
 
     // helper function

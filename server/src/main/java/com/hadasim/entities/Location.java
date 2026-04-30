@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Location {
     @Id
-    private String id; // 9 digits
+    private String id;
 
     private Double longitude;
 

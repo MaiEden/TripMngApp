@@ -60,7 +60,7 @@ const route = [
 
 // adding teacher and student data to the server
 try {
-    const response = await fetch(`${SERVER_URL}/teacher/register`, {
+    const response = await fetch(`${SERVER_URL}/teachers/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -75,7 +75,7 @@ try {
 
 try {
     for (const student of students) {
-        const response = await fetch(`${SERVER_URL}/students/Add`, {
+        const response = await fetch(`${SERVER_URL}/students/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -125,7 +125,7 @@ async function sendLocation(userId, step, isTeacher) {
     }
 
     try {
-        const response = await fetch(`${SERVER_URL}/Locations/Add`, {
+        const response = await fetch(`${SERVER_URL}/Locations/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -187,7 +187,7 @@ const farStudent =
     };
 
 try {
-    const response = await fetch(`${SERVER_URL}/students/Add`, {
+    const response = await fetch(`${SERVER_URL}/students/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -202,7 +202,7 @@ try {
 
 async function addingFarStudentLocation() {
  try {
-        const response = await fetch(`${SERVER_URL}/Locations/Add`, {
+        const response = await fetch(`${SERVER_URL}/Locations/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     private final StudentService studentService;
 
-    @PostMapping("/Add")
-    public Student getStudent(@RequestBody @Valid Student student) {
-        return studentService.AddStudent(student);
+    @PostMapping("/add")
+    public Student addStudent(@RequestBody @Valid Student student) {
+        return studentService.addStudent(student);
     }
 
     @GetMapping("/get/{id}")

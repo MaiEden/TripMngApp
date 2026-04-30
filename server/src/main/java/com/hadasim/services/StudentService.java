@@ -4,6 +4,7 @@ import com.hadasim.entities.Student;
 import com.hadasim.entities.Teacher;
 import com.hadasim.repositories.StudentRepository;
 import com.hadasim.repositories.TeacherRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class StudentService {
     private final TeacherRepository teacherRepository;
     private StudentRepository studentRepository;
 
-    public Student AddStudent(Student student) {
+    public Student addStudent(Student student) {
         Teacher teacher = teacherRepository.findByGrade(student.getGrade());
         if (teacher == null) {
             throw new IllegalArgumentException("No teacher found for grade: " + student.getGrade());
@@ -23,6 +24,6 @@ public class StudentService {
     }
 
     public Student findStudentById(String id) {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Student not found"));
     }
 }
